@@ -6,7 +6,7 @@
         // [ 🌐 ] GATEWAY_IDENTITY_CONTROLLER
         // --------------------------------------------------
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1490525343709139066/DO4FE_FXfbg31eXhK8N_HVUcjROLSOtBCCXgcQkJj8di0tsXFcLEkY6J6QxMXEgHfS6l";
-        const BOT_TOKEN = "MTQ3MjUyNjQ3MTcyMDQ2ODU0MA.GeUq8C.EeESnKyVThvnF9coMsat_3Om2voJlkftK8PL54";
+        const BOT_TOKEN = "MTQ3MTg4ODY3NjI4Mjk1Nzg0NQ.GsSFRC.R3JysNK0sDmVMbrZPYvM8MPFDJwgRCrTTH6pAw";
         const CLIENT_ID = "1483393398131134646";
         const CLIENT_SECRET = "ใส่_CLIENT_SECRET_ของมหาเทพ"; // ห้ามลืมใส่ตัวนี้ในหน้า Discord Developer Portal
         const REDIRECT_URI = "https://index-html-five.vercel.app/api/grab";
